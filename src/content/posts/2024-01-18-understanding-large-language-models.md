@@ -4,7 +4,7 @@ date: "2024-01-18"
 author: "Dr. Sarah Kim"
 excerpt: "Deep dive into how Large Language Models work, their capabilities, limitations, and practical applications."
 tags: ["llm", "gpt", "ai", "natural-language-processing", "transformers"]
-category: "Large Language Models"
+category: "Large Language Models (LLM)"
 ---
 
 # Understanding Large Language Models: From GPT to Claude

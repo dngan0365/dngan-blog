@@ -19,7 +19,8 @@ export function validatePostMetadata(metadata: Record<string, unknown>): PostMet
     date: (typeof metadata.date === 'string' ? metadata.date : '') || new Date().toISOString(),
     author: (typeof metadata.author === 'string' ? metadata.author : '') || 'Anonymous',
     excerpt: (typeof metadata.excerpt === 'string' ? metadata.excerpt : '') || '',
-    tags: Array.isArray(metadata.tags) ? metadata.tags.filter((tag): tag is string => typeof tag === 'string') : []
+    tags: Array.isArray(metadata.tags) ? metadata.tags.filter((tag): tag is string => typeof tag === 'string') : [],
+    category: (typeof metadata.category === 'string' ? metadata.category : '') || 'General'
   };
 }
 
@@ -50,6 +51,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       author: validatedMetadata.author,
       excerpt: validatedMetadata.excerpt || content.substring(0, 150) + '...',
       tags: validatedMetadata.tags || [],
+      category: validatedMetadata.category || 'General',
       content: contentHtml,
       readTime: calculateReadTime(content)
     };

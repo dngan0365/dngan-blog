@@ -4,6 +4,7 @@ export interface PostMetadata {
   author: string;
   excerpt?: string;
   tags?: string[];
+  category?: string;
 }
 
 export interface BlogPost {
@@ -13,6 +14,7 @@ export interface BlogPost {
   author: string;
   excerpt: string;
   tags: string[];
+  category: string;
   content: string;
   readTime: number;
 }

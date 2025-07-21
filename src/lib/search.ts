@@ -52,3 +52,24 @@ export function getAllTags(posts: BlogPost[]): { tag: string; count: number }[] 
     .map(([tag, count]) => ({ tag, count }))
     .sort((a, b) => b.count - a.count);
 }
+
+export function getAllCategories(posts: BlogPost[]): { category: string; count: number }[] {
+  const categoryCounts = new Map<string, number>();
+  
+  posts.forEach(post => {
+    const category = post.category || 'General';
+    categoryCounts.set(category, (categoryCounts.get(category) || 0) + 1);
+  });
+  
+  return Array.from(categoryCounts.entries())
+    .map(([category, count]) => ({ category, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
+export function filterPostsByCategory(posts: BlogPost[], selectedCategory: string | null): BlogPost[] {
+  if (!selectedCategory) {
+    return posts;
+  }
+  
+  return posts.filter(post => post.category === selectedCategory);
+}

@@ -27,6 +27,12 @@ export default function PostCard({ post }: PostCardProps) {
           {post.excerpt}
         </p>
         
+        <div className="mb-4">
+          <span className="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full font-medium">
+            {post.category}
+          </span>
+        </div>
+        
         <div className="flex items-center justify-between">
           <div className="flex flex-wrap gap-2">
             {post.tags.slice(0, 3).map((tag) => (

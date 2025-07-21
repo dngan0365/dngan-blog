@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import PostCard from '@/components/PostCard';
 import SearchBar from '@/components/SearchBar';
 import TagFilter from '@/components/TagFilter';
+import CategoryFilter from '@/components/CategoryFilter';
 import { BlogPost } from '@/lib/types';
-import { searchPosts, filterPostsByTags, getAllTags } from '@/lib/search';
+import { searchPosts, filterPostsByTags, filterPostsByCategory, getAllTags, getAllCategories } from '@/lib/search';
 
 interface BlogHomepageProps {
   initialPosts: BlogPost[];
@@ -16,9 +17,14 @@ export default function BlogHomepage({ initialPosts }: BlogHomepageProps) {
   const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>(initialPosts);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     let filtered = posts;
+    
+    if (selectedCategory) {
+      filtered = filterPostsByCategory(filtered, selectedCategory);
+    }
     
     if (searchQuery) {
       filtered = searchPosts(filtered, searchQuery);
@@ -29,9 +35,10 @@ export default function BlogHomepage({ initialPosts }: BlogHomepageProps) {
     }
     
     setFilteredPosts(filtered);
-  }, [posts, searchQuery, selectedTags]);
+  }, [posts, searchQuery, selectedTags, selectedCategory]);
 
   const availableTags = getAllTags(posts);
+  const availableCategories = getAllCategories(posts);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -45,7 +52,13 @@ export default function BlogHomepage({ initialPosts }: BlogHomepageProps) {
           </p>
         </header>
 
-        <div className="mb-8 space-y-4">
+        <div className="mb-8 space-y-6">
+          <CategoryFilter
+            availableCategories={availableCategories}
+            selectedCategory={selectedCategory}
+            onCategorySelect={setSelectedCategory}
+          />
+          
           <SearchBar
             value={searchQuery}
             onChange={setSearchQuery}
@@ -72,15 +85,16 @@ export default function BlogHomepage({ initialPosts }: BlogHomepageProps) {
                 ? "No posts available yet." 
                 : "No posts match your search criteria."}
             </p>
-            {(searchQuery || selectedTags.length > 0) && (
+            {(searchQuery || selectedTags.length > 0 || selectedCategory) && (
               <button
                 onClick={() => {
                   setSearchQuery('');
                   setSelectedTags([]);
+                  setSelectedCategory(null);
                 }}
                 className="mt-4 text-blue-600 hover:text-blue-800 underline"
               >
-                Clear filters
+                Clear all filters
               </button>
             )}
           </div>

@@ -45,19 +45,23 @@ export default function PostContent({ post }: PostContentProps) {
               {post.title}
             </h1>
             
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-4">
               <p className="text-gray-600">By {post.author}</p>
               
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              <span className="inline-block bg-purple-100 text-purple-800 text-sm px-3 py-1 rounded-full font-medium">
+                {post.category}
+              </span>
+            </div>
+            
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full"
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
           </header>
 
